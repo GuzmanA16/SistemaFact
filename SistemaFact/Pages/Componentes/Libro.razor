@@ -1,0 +1,44 @@
+﻿
+<style>
+    .sinopsis {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+<div style="display: flex; gap: 30px; 50%;">
+    <div style="max-height: 200px; max-width: 130px;">
+        <img  style="width:100%; height: 100%;" src="@libro.Portada"/>
+    </div>
+    <div style="display: flex; flex-direction: column; ">
+        <p style="font-size: 15px; font-weight: bold;max-width: 300px; ">@libro.Nombre</p>
+        <p style="font-size: 10px; opacity: 0.7;max-width: 300px; ">De: @libro.Autor | Genero Principal: @libro.Genero</p>
+        <p class="sinopsis" style="font-size: 10px; text-align: justify; max-width: 300px"><b>Sinopsis: </b> @libro.Sinopsis</p>
+       
+            <Estrellas cantidad="@libro.Estrellas" />
+
+      
+
+        @if(Comprar)
+        {
+            <div @onclick='()=>{navManager.NavigateTo($"/comprar/{libro.Id}");}' style="display: flex; gap: 20px; margin-top: 10px;align-items: center; ">
+                <button style="font-size: 12px;padding: 8px;border-radius: 5px; font-weight: bold; background-color: lightblue; display: flex; gap: 10px; align-items: center;">
+                    COMPRAR
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                    </svg>
+                </button>
+                <span style="font-size: 12px; max-width: 300px; ">RD$ @((double)libro.Precio) </span>
+            </div>
+        }
+       
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public bool Comprar { get; set; } = true;
+    [Parameter] public comprarLibro.Libro libro { get; set; } = new ComprarLibro.Libro(); 
+}
