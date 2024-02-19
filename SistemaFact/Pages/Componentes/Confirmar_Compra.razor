@@ -1,0 +1,104 @@
+﻿@page "/comprar/{id:int}"
+
+
+
+
+@if(id != 0)
+{
+    <div style="display: flex; gap: 30px; justify-content: space-evenly; align-items: center; width: 100%;">
+        <LibroComponent Comprar=false libro="@libro"></LibroComponent>
+        <div style="display: flex; flex-direction: column;justify-content: center; align-items: center;">
+            <h5 style="font-weight: bold;">Confirmar Compra</h5>
+
+           
+            <div class="form-outline" style="margin-top: 20px;">
+                <input @bind-value="cantidad" type="number" id="typeNumber" class="form-control" />
+                <label style="font-size: 10px; opacity: 0.7;" class="form-label" for="typeNumber">Cantidad de copias</label>
+            </div>
+          
+            <div @onclick='()=>{navManager.NavigateTo($"/comprar/{libro.Id}");}' style="display: flex;flex-direction: column; gap: 20px; margin-top: 10px;align-items: center; ">
+
+                <span style="font-size: 14px; max-width: 300px; ">RD$ @((double)libro.Precio * cantidad ) </span>
+                
+                <button style="font-size: 12px;padding: 8px;border-radius: 5px;  font-weight: bold; background-color: lightblue; display: flex; gap: 10px; align-items: center;">
+                    Confirmar Compra
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                    </svg>
+                </button>
+               
+            </div>
+        </div>
+    </div>
+   
+}
+
+@code {
+   
+    protected override void OnInitialized()
+    {
+        libro = libros.FirstOrDefault(l => l.Id == id) ?? new Libro() ;
+
+    }
+    public int cantidad = 1;
+    [Parameter]public int id { get; set; }
+    public Libro libro = new Libro();
+    public List<Libro> libros = new List<Libro>()
+    {
+         new Libro
+            {
+                 Id = 1,
+                Nombre = "Cien años de soledad",
+                Portada = "https://th.bing.com/th/id/R.938c16d580f65d466de44d9f2ec98732?rik=kqLcyYNhyB9XcQ&pid=ImgRaw&r=0",
+                Autor = "Gabriel García Márquez",
+                Genero = "Realismo mágico",
+                Estrellas = 5,
+                Precio = 980.00,
+                Sinopsis = "La saga multigeneracional de la familia Buendía en el pueblo ficticio de Macondo, explorando temas de amor, soledad y magia en América Latina."
+            },
+            new Libro
+            {
+                 Id = 2,
+                Nombre = "Orgullo y prejuicio",
+                Portada = "https://imagessl2.casadellibro.com/a/l/t0/82/9788415618782.jpg",
+                Autor = "Jane Austen",
+                Genero = "Clásico",
+                Estrellas = 4,
+                Precio = 780.00,
+                Sinopsis = "La historia de Elizabeth Bennet y Mr. Darcy, explorando las complejidades de las relaciones sociales y los prejuicios en la Inglaterra del siglo XIX."
+            },
+            new Libro
+            {
+                 Id = 3,
+                Nombre = "El Silmarillion",
+                Portada = "https://cdn.dc5.ro/img-prod/880831941-0.jpeg",
+                Autor = "J.R.R. Tolkien",
+                Genero = "Fantasía",
+                Estrellas = 5,
+                Precio = 610.00,
+                Sinopsis = "La epopeya de Frodo Bolsón y su viaje para destruir el Anillo Único, enfrentándose a poderes oscuros y criaturas fantásticas."
+            },
+            new Libro
+            {
+                 Id = 4,
+                Nombre = "1984",
+                Portada = "https://th.bing.com/th/id/R.ad02e140eb8c0dbbfda7216ed2f7fec7?rik=384EXC9bs5jbrA&riu=http%3a%2f%2flitstack.com%2fwp-content%2fuploads%2f2013%2f06%2f1984_poster.jpg&ehk=UiFi%2fjD6J%2bRnOXBk8xIBqGJ%2fIC25orI8NNFZFoBqXZ0%3d&risl=&pid=ImgRaw&r=0g",
+                Autor = "George Orwell",
+                Genero = "Distopía",
+                Estrellas = 4,
+                Precio = 1000.00,
+                Sinopsis = "Una visión distópica de un futuro totalitario donde el gobierno controla todos los aspectos de la vida de las personas."
+            },
+            new Libro
+            {
+                 Id = 5,
+                Nombre = "Harry Potter y el caliz de fuego",
+                Portada = "https://pictures.abebooks.com/isbn/9788478886456-uk-300.jpg",
+                Autor = "J.K. Rowling",
+                Genero = "Fantasía",
+                Estrellas = 5,
+                Precio = 1500.00,
+                Sinopsis = "La historia del joven mago Harry Potter y su entrada al mundo de la magia, enfrentándose a desafíos y"
+            }
+    };
+}
